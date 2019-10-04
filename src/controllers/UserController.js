@@ -24,11 +24,8 @@ module.exports = {
     },
 
     async findOne(req, res) {
-        let usuarios = await User.findById(req.params.id, (err, user) => {
-            if (err) {
-                return res.json({ "message": `Usuário não encontrado para o ${req.params.id} !` })
-            }
-            return res.json(user);
+        await User.findById(req.params.id, (err, user) => {
+           return (err) ? res.json({ "message": `Usuário não encontrado para o ${req.params.id} !` }) : res.json(user);
         });
     }
 }
