@@ -2,25 +2,19 @@ const User = require('./../models/User');
 
 module.exports = {
     async save(req, res) {
-        const user = {  
+        const newUserData = {  
             nome: req.body.nome,  
             email: req.body.cpf,
             idade: req.body.idade  
         };
 
-        let usuario = await User.findOne({ cpf: user.cpf });
-
-        if(!usuario) {
-            usuario = await User.create(user);
-            return res.json(usuario);
-        } 
+        let userFromDb = await User.findOne({ cpf: newUserData.cpf });
         
-        return res.json({ "message": "Usuário já cadastrado!"});
+        return userFromDb ? res.json({ "message": "Usuário já cadastrado!"}) : res.json(await User.create(newUserData));
     },
 
     async find(req, res) {
-        let usuarios = await User.find();
-        return res.json(usuarios);
+        return res.json(await User.find());
     },
 
     async findOne(req, res) {
