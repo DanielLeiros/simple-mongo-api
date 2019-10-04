@@ -8,9 +8,11 @@ module.exports = {
             idade: req.body.idade  
         };
 
-        let userFromDb = await User.findOne({ cpf: newUserData.cpf });
-        
-        return userFromDb ? res.json({ "message": "Usuário já cadastrado!"}) : res.json(await User.create(newUserData));
+        const userFromDb = await User.findOne({ cpf: newUserData.cpf });
+  
+        return userFromDb 
+            ? res.json({ "message": "Usuário já cadastrado!"}) 
+            : res.json(await User.create(newUserData));
     },
 
     async find(req, res) {
